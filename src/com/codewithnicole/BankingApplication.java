@@ -1,16 +1,20 @@
 package com.codewithnicole;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BankingApplication {
 
     // List to store bank accounts
-    private static final ArrayList<BankAccount> accounts = new ArrayList<>();
+    private static ArrayList<BankAccount> accounts = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int option;
 
+        // Load accounts from file
+        accounts = AccountStorage.loadAccounts();
+
+        int option;
         do {
             System.out.println("Welcome to the Banking Application!");
             System.out.println("1. Create a New Account");
@@ -30,6 +34,8 @@ public class BankingApplication {
                     break;
 
                 case 3: // Exit
+                    // Save accounts to file before exiting
+                    AccountStorage.saveAccounts(accounts);
                     System.out.println("Thank you for using the Banking Application. Goodbye!");
                     break;
 
@@ -107,52 +113,5 @@ public class BankingApplication {
                     System.out.println("Invalid option. Please try again.");
             }
         } while (option != 4);
-    }
-
-    // BankAccount class
-    static class BankAccount {
-        private final String accountHolderName;
-        private final String accountNumber;
-        private double balance;
-
-        public BankAccount(String accountHolderName, String accountNumber) {
-            this.accountHolderName = accountHolderName;
-            this.accountNumber = accountNumber;
-            this.balance = 0.0;
-        }
-
-        public String getAccountHolderName() {
-            return accountHolderName;
-        }
-
-        public String getAccountNumber() {
-            return accountNumber;
-        }
-
-        public double getBalance() {
-            return balance;
-        }
-
-        public void deposit(double amount) {
-            if (amount > 0) {
-                balance += amount;
-                System.out.println("Successfully deposited $" + amount);
-            } else {
-                System.out.println("Deposit amount must be greater than zero.");
-            }
-        }
-
-        public void withdraw(double amount) {
-            if (amount > 0) {
-                if (amount <= balance) {
-                    balance -= amount;
-                    System.out.println("Successfully withdrew $" + amount);
-                } else {
-                    System.out.println("Insufficient balance. Your current balance is $" + balance);
-                }
-            } else {
-                System.out.println("Withdrawal amount must be greater than zero.");
-            }
-        }
     }
 }
