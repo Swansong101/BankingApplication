@@ -5,11 +5,13 @@ import java.io.Serializable;
 public class BankAccount implements Serializable {
     private final String accountHolderName;
     private final String accountNumber;
+    private final String pin; // Added pin for authentication
     private double balance;
 
-    public BankAccount(String accountHolderName, String accountNumber) {
+    public BankAccount(String accountHolderName, String accountNumber, String pin) {
         this.accountHolderName = accountHolderName;
         this.accountNumber = accountNumber;
+        this.pin = pin; // Assign PIN
         this.balance = 0.0;
     }
 
@@ -23,6 +25,14 @@ public class BankAccount implements Serializable {
 
     public double getBalance() {
         return balance;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public boolean authenticate(String enteredPin) {
+        return this.pin.equals(enteredPin); // Check if entered pin matches stored pin
     }
 
     public void deposit(double amount) {

@@ -52,7 +52,9 @@ public class BankingApplication {
         String name = scanner.nextLine();
         System.out.print("Enter account number: ");
         String accountNumber = scanner.nextLine();
-        BankAccount newAccount = new BankAccount(name, accountNumber);
+        System.out.print("Enter pin number: ");
+        String pin = scanner.nextLine();
+        BankAccount newAccount = new BankAccount(name, accountNumber, pin);
         accounts.add(newAccount);
         System.out.println("Account created successfully!\n");
     }
